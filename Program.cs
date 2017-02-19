@@ -37,6 +37,30 @@ namespace Snake
             bool running = true;
             while (running)
             {
+                // Usereingabe
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo info = Console.ReadKey(true);
+                    switch (info.Key)
+                    {
+                        case ConsoleKey.LeftArrow:
+                            direction = 2;
+                            break;
+                        case ConsoleKey.RightArrow:
+                            direction = 0;
+                            break;
+                        case ConsoleKey.UpArrow:
+                            direction = 3;
+                            break;
+                        case ConsoleKey.DownArrow:
+                            direction = 1;
+                            break;
+                        case ConsoleKey.Escape:
+                            running = false;
+                            break;
+                    }
+                }
+
                 for (int x = 0; x < width; x++)
                 {
                     for (int y = 0; y < height; y++)
@@ -73,7 +97,10 @@ namespace Snake
                 }
 
                 // Abbruchbedingung
-                if (playerPositionX < 0 || playerPositionY < 0)
+                if (playerPositionX < 0 ||
+                    playerPositionY < 0 ||
+                    playerPositionX >= width ||
+                    playerPositionY >= height)
                 {
                     running = false;
                 }
