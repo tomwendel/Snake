@@ -12,15 +12,19 @@ namespace Snake
         {
             int width = 140;
             int height = 40;
+            int snakeLength = 10;
 
-            int playerPositionX = 20;
-            int playerPositionY = 20;
+            int[] playerPositionsX = new int[snakeLength];
+            for (int i = 0; i < playerPositionsX.Length; i++)
+            {
+                playerPositionsX[i] = 20 - i;
+            }
 
-            int playerPositionX2 = 19;
-            int playerPositionY2 = 20;
-
-            int playerPositionX3 = 18;
-            int playerPositionY3 = 20;
+            int[] playerPositionsY = new int[snakeLength];
+            for (int i = 0; i < playerPositionsY.Length; i++)
+            {
+                playerPositionsY[i] = 20;
+            }
 
             Direction direction = Direction.Up;
 
@@ -65,15 +69,13 @@ namespace Snake
                     for (int y = 0; y < height; y++)
                     {
                         Console.SetCursorPosition(x + 1, y + 1);
-                        if ((x == playerPositionX && y == playerPositionY) ||
-                            (x == playerPositionX2 && y == playerPositionY2) ||
-                            (x == playerPositionX3 && y == playerPositionY3))
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                        for (int i = 0; i < snakeLength; i++)
                         {
-                            Console.BackgroundColor = ConsoleColor.White;
-                        }
-                        else
-                        {
-                            Console.BackgroundColor = ConsoleColor.Gray;
+                            if (x == playerPositionsX[i] && y == playerPositionsY[i])
+                            {
+                                Console.BackgroundColor = ConsoleColor.White;
+                            }
                         }
 
                         Console.Write(" ");
@@ -81,33 +83,33 @@ namespace Snake
                 }
 
                 // Spieler bewegen
-                playerPositionX3 = playerPositionX2;
-                playerPositionY3 = playerPositionY2;
-
-                playerPositionX2 = playerPositionX;
-                playerPositionY2 = playerPositionY;
+                for (int i = snakeLength - 1; i > 0; i--)
+                {
+                    playerPositionsX[i] = playerPositionsX[i - 1];
+                    playerPositionsY[i] = playerPositionsY[i - 1];
+                }
 
                 switch (direction)
                 {
                     case Direction.Right:
-                        playerPositionX++;
+                        playerPositionsX[0]++;
                         break;
                     case Direction.Down:
-                        playerPositionY++;
+                        playerPositionsY[0]++;
                         break;
                     case Direction.Left:
-                        playerPositionX--;
+                        playerPositionsX[0]--;
                         break;
                     case Direction.Up:
-                        playerPositionY--;
+                        playerPositionsY[0]--;
                         break;
                 }
 
                 // Abbruchbedingung
-                if (playerPositionX < 0 ||
-                    playerPositionY < 0 ||
-                    playerPositionX >= width ||
-                    playerPositionY >= height)
+                if (playerPositionsX[0] < 0 ||
+                    playerPositionsY[0] < 0 ||
+                    playerPositionsX[0] >= width ||
+                    playerPositionsY[0] >= height)
                 {
                     running = false;
                 }
