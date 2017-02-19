@@ -10,19 +10,6 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            unsafe
-            {
-                int[] test = new int[] { 20, 256, 1000 };
-                fixed (int* pointer = &test[0])
-                {
-                    ushort* p2 = (ushort*)pointer;
-                    p2 += 2;
-                    int output = *p2;
-                }
-            }
-
-            return;
-
             ushort points = 0;
 
             byte width = 140;
@@ -54,26 +41,7 @@ namespace Snake
             while (running)
             {
                 // Usereingabe
-                if (Console.KeyAvailable)
-                {
-                    ConsoleKeyInfo info = Console.ReadKey(true);
-                    switch (info.Key)
-                    {
-                        case ConsoleKey.LeftArrow:
-                            direction--;
-                            if (direction < Direction.Right)
-                                direction = Direction.Up;
-                            break;
-                        case ConsoleKey.RightArrow:
-                            direction++;
-                            if (direction > Direction.Up)
-                                direction = Direction.Right;
-                            break;
-                        case ConsoleKey.Escape:
-                            running = false;
-                            break;
-                    }
-                }
+                running = UserInput(ref direction);
 
                 // Spielfeld Ausgabe
                 for (byte x = 0; x < width; x++)
@@ -135,7 +103,9 @@ namespace Snake
 
                     // TODO: Schlange verlängern
                     snakeLength++;
+
                     Coordinate[] temp = new Coordinate[snakeLength];
+
                     for (ushort i = 0; i < playerPositions.Length; i++)
                     {
                         temp[i] = playerPositions[i];
@@ -165,6 +135,33 @@ namespace Snake
                     running = false;
                 }
             }
+        }
+
+        static bool UserInput(ref Direction direction)
+        {
+            bool running = true;
+            if (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo info = Console.ReadKey(true);
+                switch (info.Key)
+                {
+                    case ConsoleKey.LeftArrow:
+                        direction--;
+                        if (direction < Direction.Right)
+                            direction = Direction.Up;
+                        break;
+                    case ConsoleKey.RightArrow:
+                        direction++;
+                        if (direction > Direction.Up)
+                            direction = Direction.Right;
+                        break;
+                    case ConsoleKey.Escape:
+                        running = false;
+                        break;
+                }
+            }
+
+            return running;
         }
 
         static Coordinate FindFreeSpot(byte width, byte height, Coordinate[] player)
