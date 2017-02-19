@@ -16,9 +16,11 @@ namespace Snake
             int height = 40;
             int snakeLength = 10;
 
+            Random random = new Random();
+            
             Coordinate apple;
-            apple.X = 100;
-            apple.Y = 30;
+            apple.X = random.Next(width);
+            apple.Y = random.Next(height);
 
             Coordinate[] playerPositions = new Coordinate[snakeLength];
             for (int i = 0; i < playerPositions.Length; i++)
@@ -131,9 +133,9 @@ namespace Snake
                     temp[temp.Length - 1] = lastPart;
                     playerPositions = temp;
 
-                    // TODO: Neue Position für den Apfel finden
-                    apple.X = 1;
-                    apple.Y = 1;
+                    // Neue Position für den Apfel finden
+                    apple.X = random.Next(width);
+                    apple.Y = random.Next(height);
                 }
 
                 // Schlange frisst sich selbst
