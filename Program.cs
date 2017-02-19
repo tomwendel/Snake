@@ -14,19 +14,15 @@ namespace Snake
             int height = 40;
             int snakeLength = 10;
 
-            int appleX = 100;
-            int appleY = 30;
+            Coordinate apple;
+            apple.X = 100;
+            apple.Y = 30;
 
-            int[] playerPositionsX = new int[snakeLength];
-            for (int i = 0; i < playerPositionsX.Length; i++)
+            Coordinate[] playerPositions = new Coordinate[snakeLength];
+            for (int i = 0; i < playerPositions.Length; i++)
             {
-                playerPositionsX[i] = 20 - i;
-            }
-
-            int[] playerPositionsY = new int[snakeLength];
-            for (int i = 0; i < playerPositionsY.Length; i++)
-            {
-                playerPositionsY[i] = 20;
+                playerPositions[i].X = 20 - i;
+                playerPositions[i].Y = 20;
             }
 
             Direction direction = Direction.Up;
@@ -77,14 +73,14 @@ namespace Snake
                         // Ist die Zelle Teil der Schlange?
                         for (int i = 0; i < snakeLength; i++)
                         {
-                            if (x == playerPositionsX[i] && y == playerPositionsY[i])
+                            if (x == playerPositions[i].X && y == playerPositions[i].Y)
                             {
                                 Console.BackgroundColor = ConsoleColor.White;
                             }
                         }
 
                         // Ist die Zelle Teil des Apfels?
-                        if (x == appleX && y == appleY)
+                        if (x == apple.X && y == apple.Y)
                         {
                             Console.BackgroundColor = ConsoleColor.Red;
                         }
@@ -96,49 +92,49 @@ namespace Snake
                 // Spieler bewegen
                 for (int i = snakeLength - 1; i > 0; i--)
                 {
-                    playerPositionsX[i] = playerPositionsX[i - 1];
-                    playerPositionsY[i] = playerPositionsY[i - 1];
+                    playerPositions[i].X = playerPositions[i - 1].X;
+                    playerPositions[i].Y = playerPositions[i - 1].Y;
                 }
 
                 switch (direction)
                 {
                     case Direction.Right:
-                        playerPositionsX[0]++;
+                        playerPositions[0].X++;
                         break;
                     case Direction.Down:
-                        playerPositionsY[0]++;
+                        playerPositions[0].Y++;
                         break;
                     case Direction.Left:
-                        playerPositionsX[0]--;
+                        playerPositions[0].X--;
                         break;
                     case Direction.Up:
-                        playerPositionsY[0]--;
+                        playerPositions[0].Y--;
                         break;
                 }
 
                 // Schlange frisst Apfel
-                if (playerPositionsX[0] == appleX &&
-                    playerPositionsY[0] == appleY)
+                if (playerPositions[0].X == apple.X &&
+                    playerPositions[0].Y == apple.Y)
                 {
                     // TODO: Punkte erhöhen
                     // TODO: Schlange verlängern
                 }
 
                 // Schlange frisst sich selbst
-                for (int i = 1; i < playerPositionsX.Length; i++)
+                for (int i = 1; i < playerPositions.Length; i++)
                 {
-                    if (playerPositionsX[0] == playerPositionsX[i] &&
-                        playerPositionsY[0] == playerPositionsY[i])
+                    if (playerPositions[0].X == playerPositions[i].X &&
+                        playerPositions[0].Y == playerPositions[i].Y)
                     {
                         running = false;
                     }
                 }
 
                 // Abbruchbedingung
-                if (playerPositionsX[0] < 0 ||
-                    playerPositionsY[0] < 0 ||
-                    playerPositionsX[0] >= width ||
-                    playerPositionsY[0] >= height)
+                if (playerPositions[0].X < 0 ||
+                    playerPositions[0].Y < 0 ||
+                    playerPositions[0].X >= width ||
+                    playerPositions[0].Y >= height)
                 {
                     running = false;
                 }
@@ -152,5 +148,11 @@ namespace Snake
         Down,
         Left,
         Up
+    }
+
+    struct Coordinate
+    {
+        public int X;
+        public int Y;
     }
 }
