@@ -16,6 +16,12 @@ namespace Snake
             int playerPositionX = 20;
             int playerPositionY = 20;
 
+            int playerPositionX2 = 19;
+            int playerPositionY2 = 20;
+
+            int playerPositionX3 = 18;
+            int playerPositionY3 = 20;
+
             Direction direction = Direction.Up;
 
             // Initialisierung des Fensters
@@ -59,7 +65,9 @@ namespace Snake
                     for (int y = 0; y < height; y++)
                     {
                         Console.SetCursorPosition(x + 1, y + 1);
-                        if (x == playerPositionX && y == playerPositionY)
+                        if ((x == playerPositionX && y == playerPositionY) ||
+                            (x == playerPositionX2 && y == playerPositionY2) ||
+                            (x == playerPositionX3 && y == playerPositionY3))
                         {
                             Console.BackgroundColor = ConsoleColor.White;
                         }
@@ -73,6 +81,12 @@ namespace Snake
                 }
 
                 // Spieler bewegen
+                playerPositionX3 = playerPositionX2;
+                playerPositionY3 = playerPositionY2;
+
+                playerPositionX2 = playerPositionX;
+                playerPositionY2 = playerPositionY;
+
                 switch (direction)
                 {
                     case Direction.Right:
