@@ -22,7 +22,7 @@ namespace Snake
              * 2 = links
              * 3 = oben
              */
-            int direction = 2;
+            int direction = 3;
 
             // Initialisierung des Fensters
             Console.Title = "Snake 2.0";
@@ -34,21 +34,26 @@ namespace Snake
             Console.BackgroundColor = ConsoleColor.Magenta;
             Console.Clear();
 
-            while (true)
+            bool running = true;
+            while (running)
             {
-                Console.BackgroundColor = ConsoleColor.Gray;
                 for (int x = 0; x < width; x++)
                 {
                     for (int y = 0; y < height; y++)
                     {
                         Console.SetCursorPosition(x + 1, y + 1);
+                        if (x == playerPositionX && y == playerPositionY)
+                        {
+                            Console.BackgroundColor = ConsoleColor.White;
+                        }
+                        else
+                        {
+                            Console.BackgroundColor = ConsoleColor.Gray;
+                        }
+
                         Console.Write(" ");
                     }
                 }
-
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(playerPositionX, playerPositionY);
-                Console.Write(" ");
 
                 // Spieler bewegen
                 switch (direction)
@@ -67,8 +72,11 @@ namespace Snake
                         break;
                 }
 
-                if (playerPositionX <= 0)
-                    direction = 0;
+                // Abbruchbedingung
+                if (playerPositionX < 0 || playerPositionY < 0)
+                {
+                    running = false;
+                }
             }
         }
     }
