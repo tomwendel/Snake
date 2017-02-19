@@ -14,6 +14,9 @@ namespace Snake
             int height = 40;
             int snakeLength = 10;
 
+            int appleX = 100;
+            int appleY = 30;
+
             int[] playerPositionsX = new int[snakeLength];
             for (int i = 0; i < playerPositionsX.Length; i++)
             {
@@ -70,12 +73,20 @@ namespace Snake
                     {
                         Console.SetCursorPosition(x + 1, y + 1);
                         Console.BackgroundColor = ConsoleColor.Gray;
+
+                        // Ist die Zelle Teil der Schlange?
                         for (int i = 0; i < snakeLength; i++)
                         {
                             if (x == playerPositionsX[i] && y == playerPositionsY[i])
                             {
                                 Console.BackgroundColor = ConsoleColor.White;
                             }
+                        }
+
+                        // Ist die Zelle Teil des Apfels?
+                        if (x == appleX && y == appleY)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
                         }
 
                         Console.Write(" ");
@@ -103,6 +114,24 @@ namespace Snake
                     case Direction.Up:
                         playerPositionsY[0]--;
                         break;
+                }
+
+                // Schlange frisst Apfel
+                if (playerPositionsX[0] == appleX &&
+                    playerPositionsY[0] == appleY)
+                {
+                    // TODO: Punkte erhöhen
+                    // TODO: Schlange verlängern
+                }
+
+                // Schlange frisst sich selbst
+                for (int i = 1; i < playerPositionsX.Length; i++)
+                {
+                    if (playerPositionsX[0] == playerPositionsX[i] &&
+                        playerPositionsY[0] == playerPositionsY[i])
+                    {
+                        running = false;
+                    }
                 }
 
                 // Abbruchbedingung
