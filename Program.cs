@@ -10,6 +10,19 @@ namespace Snake
     {
         static void Main(string[] args)
         {
+            unsafe
+            {
+                int[] test = new int[] { 20, 256, 1000 };
+                fixed (int* pointer = &test[0])
+                {
+                    ushort* p2 = (ushort*)pointer;
+                    p2 += 2;
+                    int output = *p2;
+                }
+            }
+
+            return;
+
             ushort points = 0;
 
             byte width = 140;
@@ -20,7 +33,7 @@ namespace Snake
             Coordinate[] playerPositions = new Coordinate[snakeLength];
             for (ushort i = 0; i < playerPositions.Length; i++)
             {
-                playerPositions[i].X = 20 - i;
+                playerPositions[i].X = (byte)(20 - i);
                 playerPositions[i].Y = 20;
             }
 
@@ -161,8 +174,8 @@ namespace Snake
 
             do
             {
-                result.X = random.Next(width);
-                result.Y = random.Next(height);
+                result.X = (byte)random.Next(width);
+                result.Y = (byte)random.Next(height);
             } while (CheckCollision(result, player));
 
             return result;
