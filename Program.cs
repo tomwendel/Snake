@@ -110,6 +110,8 @@ namespace Snake
                     }
                 }
 
+                PrintText();
+
                 // Spieler bewegen
                 Coordinate lastPart = playerPositions[snakeLength - 1];
                 for (int i = snakeLength - 1; i > 0; i--)
@@ -174,6 +176,14 @@ namespace Snake
                     running = false;
                 }
             }
+        }
+
+        static void PrintText()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("Hallo Welt");
         }
     }
 
