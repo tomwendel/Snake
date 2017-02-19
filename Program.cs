@@ -110,7 +110,7 @@ namespace Snake
                     }
                 }
 
-                PrintText();
+                PrintPoints(points);
 
                 // Spieler bewegen
                 Coordinate lastPart = playerPositions[snakeLength - 1];
@@ -140,7 +140,7 @@ namespace Snake
                     playerPositions[0].Y == apple.Y)
                 {
                     // Punkte erhöhen
-                    points++;
+                    points += 100;
 
                     // TODO: Schlange verlängern
                     snakeLength++;
@@ -178,12 +178,13 @@ namespace Snake
             }
         }
 
-        static void PrintText()
+        static void PrintPoints(int points)
         {
             Console.SetCursorPosition(0, 0);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("Hallo Welt");
+            Console.Write("Points: ");
+            Console.Write(points);
         }
     }
 
