@@ -16,13 +16,7 @@ namespace Snake
             int playerPositionX = 20;
             int playerPositionY = 20;
 
-            /*
-             * 0 = rechts
-             * 1 = unten
-             * 2 = links
-             * 3 = oben
-             */
-            int direction = 3;
+            Direction direction = Direction.Up;
 
             // Initialisierung des Fensters
             Console.Title = "Snake 2.0";
@@ -45,16 +39,18 @@ namespace Snake
                     {
                         case ConsoleKey.LeftArrow:
                             direction--;
+                            if (direction < Direction.Right)
+                                direction = Direction.Up;
                             break;
                         case ConsoleKey.RightArrow:
                             direction++;
+                            if (direction > Direction.Up)
+                                direction = Direction.Right;
                             break;
                         case ConsoleKey.Escape:
                             running = false;
                             break;
                     }
-
-                    direction = (direction + 4) % 4;
                 }
 
                 // Spielfeld Ausgabe
@@ -79,16 +75,16 @@ namespace Snake
                 // Spieler bewegen
                 switch (direction)
                 {
-                    case 0:
+                    case Direction.Right:
                         playerPositionX++;
                         break;
-                    case 1:
+                    case Direction.Down:
                         playerPositionY++;
                         break;
-                    case 2:
+                    case Direction.Left:
                         playerPositionX--;
                         break;
-                    case 3:
+                    case Direction.Up:
                         playerPositionY--;
                         break;
                 }
@@ -103,5 +99,13 @@ namespace Snake
                 }
             }
         }
+    }
+
+    enum Direction
+    {
+        Right,
+        Down,
+        Left,
+        Up
     }
 }
