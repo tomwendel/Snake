@@ -44,23 +44,20 @@ namespace Snake
                     switch (info.Key)
                     {
                         case ConsoleKey.LeftArrow:
-                            direction = 2;
+                            direction--;
                             break;
                         case ConsoleKey.RightArrow:
-                            direction = 0;
-                            break;
-                        case ConsoleKey.UpArrow:
-                            direction = 3;
-                            break;
-                        case ConsoleKey.DownArrow:
-                            direction = 1;
+                            direction++;
                             break;
                         case ConsoleKey.Escape:
                             running = false;
                             break;
                     }
+
+                    direction = (direction + 4) % 4;
                 }
 
+                // Spielfeld Ausgabe
                 for (int x = 0; x < width; x++)
                 {
                     for (int y = 0; y < height; y++)
