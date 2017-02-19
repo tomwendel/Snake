@@ -10,15 +10,15 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            int points = 0;
+            ushort points = 0;
 
-            int width = 140;
-            int height = 40;
-            int snakeLength = 10;
+            byte width = 140;
+            byte height = 40;
+            ushort snakeLength = 10;
 
             // Schlange erstellen
             Coordinate[] playerPositions = new Coordinate[snakeLength];
-            for (int i = 0; i < playerPositions.Length; i++)
+            for (ushort i = 0; i < playerPositions.Length; i++)
             {
                 playerPositions[i].X = 20 - i;
                 playerPositions[i].Y = 20;
@@ -63,15 +63,15 @@ namespace Snake
                 }
 
                 // Spielfeld Ausgabe
-                for (int x = 0; x < width; x++)
+                for (byte x = 0; x < width; x++)
                 {
-                    for (int y = 0; y < height; y++)
+                    for (byte y = 0; y < height; y++)
                     {
                         Console.SetCursorPosition(x + 1, y + 1);
                         Console.BackgroundColor = ConsoleColor.Gray;
 
                         // Ist die Zelle Teil der Schlange?
-                        for (int i = 0; i < snakeLength; i++)
+                        for (ushort i = 0; i < snakeLength; i++)
                         {
                             if (x == playerPositions[i].X && y == playerPositions[i].Y)
                             {
@@ -123,7 +123,7 @@ namespace Snake
                     // TODO: Schlange verlängern
                     snakeLength++;
                     Coordinate[] temp = new Coordinate[snakeLength];
-                    for (int i = 0; i < playerPositions.Length; i++)
+                    for (ushort i = 0; i < playerPositions.Length; i++)
                     {
                         temp[i] = playerPositions[i];
                     }
@@ -135,7 +135,7 @@ namespace Snake
                 }
 
                 // Schlange frisst sich selbst
-                for (int i = 1; i < playerPositions.Length; i++)
+                for (ushort i = 1; i < playerPositions.Length; i++)
                 {
                     if (CheckCollision(playerPositions[0], playerPositions[i]))
                     {
@@ -154,7 +154,7 @@ namespace Snake
             }
         }
 
-        static Coordinate FindFreeSpot(int width, int height, Coordinate[] player)
+        static Coordinate FindFreeSpot(byte width, byte height, Coordinate[] player)
         {
             Random random = new Random();
             Coordinate result;
@@ -186,7 +186,7 @@ namespace Snake
             return p1.X == p2.X && p1.Y == p2.Y;
         }
 
-        static void PrintPoints(int points)
+        static void PrintPoints(ushort points)
         {
             Console.SetCursorPosition(0, 0);
             Console.BackgroundColor = ConsoleColor.Black;
@@ -206,7 +206,7 @@ namespace Snake
 
     struct Coordinate
     {
-        public int X;
-        public int Y;
+        public byte X;
+        public byte Y;
     }
 }
