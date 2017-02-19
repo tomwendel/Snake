@@ -10,6 +10,8 @@ namespace Snake
     {
         static void Main(string[] args)
         {
+            int points = 0;
+
             int width = 140;
             int height = 40;
             int snakeLength = 10;
@@ -90,10 +92,10 @@ namespace Snake
                 }
 
                 // Spieler bewegen
+                Coordinate lastPart = playerPositions[snakeLength - 1];
                 for (int i = snakeLength - 1; i > 0; i--)
                 {
-                    playerPositions[i].X = playerPositions[i - 1].X;
-                    playerPositions[i].Y = playerPositions[i - 1].Y;
+                    playerPositions[i] = playerPositions[i - 1];
                 }
 
                 switch (direction)
@@ -116,8 +118,22 @@ namespace Snake
                 if (playerPositions[0].X == apple.X &&
                     playerPositions[0].Y == apple.Y)
                 {
-                    // TODO: Punkte erhöhen
+                    // Punkte erhöhen
+                    points++;
+
                     // TODO: Schlange verlängern
+                    snakeLength++;
+                    Coordinate[] temp = new Coordinate[snakeLength];
+                    for (int i = 0; i < playerPositions.Length; i++)
+                    {
+                        temp[i] = playerPositions[i];
+                    }
+                    temp[temp.Length - 1] = lastPart;
+                    playerPositions = temp;
+
+                    // TODO: Neue Position für den Apfel finden
+                    apple.X = 1;
+                    apple.Y = 1;
                 }
 
                 // Schlange frisst sich selbst
