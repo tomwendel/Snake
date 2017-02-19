@@ -17,17 +17,34 @@ namespace Snake
             int snakeLength = 10;
 
             Random random = new Random();
-            
-            Coordinate apple;
-            apple.X = random.Next(width);
-            apple.Y = random.Next(height);
 
+            // Schlange erstellen
             Coordinate[] playerPositions = new Coordinate[snakeLength];
             for (int i = 0; i < playerPositions.Length; i++)
             {
                 playerPositions[i].X = 20 - i;
                 playerPositions[i].Y = 20;
             }
+
+            Coordinate apple;
+            bool collision = false;
+            do
+            {
+                // Apfel setzen
+                apple.X = random.Next(width);
+                apple.Y = random.Next(height);
+
+                // Kollision mit Apfel
+                collision = false;
+                for (int i = 0; i < playerPositions.Length; i++)
+                {
+                    if (apple.X == playerPositions[i].X &&
+                        apple.Y == playerPositions[i].Y)
+                    {
+                        collision = true;
+                    }
+                }
+            } while (collision);
 
             Direction direction = Direction.Up;
 
