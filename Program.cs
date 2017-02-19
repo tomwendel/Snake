@@ -16,8 +16,6 @@ namespace Snake
             int height = 40;
             int snakeLength = 10;
 
-            Random random = new Random();
-
             // Schlange erstellen
             Coordinate[] playerPositions = new Coordinate[snakeLength];
             for (int i = 0; i < playerPositions.Length; i++)
@@ -26,18 +24,7 @@ namespace Snake
                 playerPositions[i].Y = 20;
             }
 
-            Coordinate apple;
-            bool collision = false;
-            do
-            {
-                // Apfel setzen
-                apple.X = random.Next(width);
-                apple.Y = random.Next(height);
-
-                // Kollision mit Apfel
-                collision = CheckCollision(apple, playerPositions);
-            } while (collision);
-
+            Coordinate apple = FindFreeSpot(width, height, playerPositions);
             Direction direction = Direction.Up;
 
             // Initialisierung des Fensters
@@ -144,8 +131,7 @@ namespace Snake
                     playerPositions = temp;
 
                     // Neue Position für den Apfel finden
-                    apple.X = random.Next(width);
-                    apple.Y = random.Next(height);
+                    apple = FindFreeSpot(width, height, playerPositions);
                 }
 
                 // Schlange frisst sich selbst
@@ -166,6 +152,20 @@ namespace Snake
                     running = false;
                 }
             }
+        }
+
+        static Coordinate FindFreeSpot(int width, int height, Coordinate[] player)
+        {
+            Random random = new Random();
+            Coordinate result;
+
+            do
+            {
+                result.X = random.Next(width);
+                result.Y = random.Next(height);
+            } while (CheckCollision(result, player));
+
+            return result;
         }
 
         static bool CheckCollision(Coordinate p1, Coordinate[] snake)
