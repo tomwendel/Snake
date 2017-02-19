@@ -35,15 +35,7 @@ namespace Snake
                 apple.Y = random.Next(height);
 
                 // Kollision mit Apfel
-                collision = false;
-                for (int i = 0; i < playerPositions.Length; i++)
-                {
-                    if (apple.X == playerPositions[i].X &&
-                        apple.Y == playerPositions[i].Y)
-                    {
-                        collision = true;
-                    }
-                }
+                collision = CheckCollision(apple, playerPositions);
             } while (collision);
 
             Direction direction = Direction.Up;
@@ -136,8 +128,7 @@ namespace Snake
                 }
 
                 // Schlange frisst Apfel
-                if (playerPositions[0].X == apple.X &&
-                    playerPositions[0].Y == apple.Y)
+                if (CheckCollision(playerPositions[0], apple))
                 {
                     // Punkte erhöhen
                     points += 100;
@@ -160,8 +151,7 @@ namespace Snake
                 // Schlange frisst sich selbst
                 for (int i = 1; i < playerPositions.Length; i++)
                 {
-                    if (playerPositions[0].X == playerPositions[i].X &&
-                        playerPositions[0].Y == playerPositions[i].Y)
+                    if (CheckCollision(playerPositions[0], playerPositions[i]))
                     {
                         running = false;
                     }
@@ -176,6 +166,24 @@ namespace Snake
                     running = false;
                 }
             }
+        }
+
+        static bool CheckCollision(Coordinate p1, Coordinate[] snake)
+        {
+            for (int i = 0; i < snake.Length; i++)
+            {
+                if (CheckCollision(p1, snake[i]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        static bool CheckCollision(Coordinate p1, Coordinate p2)
+        {
+            return p1.X == p2.X && p1.Y == p2.Y;
         }
 
         static void PrintPoints(int points)
